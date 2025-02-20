@@ -1,11 +1,11 @@
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const ErrorPage = () => {
   const navigate = useNavigate();
 
   const handleGoHome = () => {
-    navigate('/'); // Navigate to the homepage
+    navigate('/home'); // Navigate to the homepage
   };
 
   return (

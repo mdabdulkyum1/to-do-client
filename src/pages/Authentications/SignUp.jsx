@@ -21,7 +21,7 @@ const SignUp = () => {
   const { createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const targetPath = location?.state ? `${location.state}` : "/";
+  const targetPath = location?.state ? `${location.state}` : "/home";
 
   const onSubmit = async (data) => {
     const { name, email, photo, password } = data;

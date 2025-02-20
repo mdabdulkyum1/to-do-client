@@ -24,7 +24,7 @@ const Login = () => {
   const { loginUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const targetPath = location?.state ? `${location.state}` : "/";
+  const targetPath = location?.state ? `${location.state}` : "/home";
 
   const onSubmit = async (data) => {
     const { email, password } = data;

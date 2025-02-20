@@ -1,22 +1,19 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router";
 import useScrollDirection from "../../hooks/ScrollDirection/useScrollDirection";
 import useAuth from "../../hooks/GetAuthInfo/useAuth";
 import ThemeToggle from "./../../hooks/ThemeToggle/ThemeToggle";
-import logo from "../../assets/logo.png";
-import darkLogo from "../../assets/darkLogo.png";
 import { Tooltip } from "react-tooltip";
-import useRole from './../../hooks/GetRole/useRole';
+
 
 const Navbar = () => {
   const isVisible = useScrollDirection();
 
   const { user, loading, logOut } = useAuth();
-  const {role} = useRole();
 
   const navigate = useNavigate();
   const handelLogOut = () => {
     logOut().then(() => {
-      navigate("/login");
+      navigate("/");
     });
   };
 
@@ -24,11 +21,11 @@ const Navbar = () => {
     <>
       <li>
         <NavLink
-          to="/"
+          to="/home"
           className={({ isActive }) =>
             `px-4 py-2 rounded ${
               isActive
-                ? "dark:text-primary border-b-2 border-primary"
+                ? "border-b-2 dark:border-white"
                 : "text-light-text hover:text-primary dark:text-dark-text dark:hover:text-accent"
             }`
           }
@@ -36,51 +33,6 @@ const Navbar = () => {
           Home
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/all-classes"
-          className={({ isActive }) =>
-            `px-4 py-2 rounded ${
-              isActive
-                ? "dark:text-primary border-b-2 border-primary"
-                : "text-light-text hover:text-primary dark:text-dark-text dark:hover:text-accent"
-            }`
-          }
-        >
-          All Classes
-        </NavLink>
-      </li>
-      {
-        role === "student" && <li>
-        <NavLink
-          to="/tech-on"
-          className={({ isActive }) =>
-            `px-4 py-2 rounded ${
-              isActive
-                ? "dark:text-primary border-b-2 border-primary"
-                : "text-light-text hover:text-primary dark:text-dark-text dark:hover:text-accent"
-            }`
-          }
-        >
-          Teach on EduProSphere
-        </NavLink>
-      </li>
-      }
-      <li>
-  <NavLink
-    to="/about"
-    className={({ isActive }) =>
-      `px-4 py-2 rounded ${
-        isActive
-          ? "dark:text-primary border-b-2 border-primary"
-          : "text-light-text hover:text-primary dark:text-dark-text dark:hover:text-accent"
-      }`
-    }
-  >
-    About EduManage
-  </NavLink>
-</li>
-
     </>
   );
 
@@ -88,22 +40,17 @@ const Navbar = () => {
     <>
       <li>
         <NavLink
-          to={
-            role === "admin" ? "/dashboard" :
-            role === "teacher" ? "/dashboard/teacher-home" :
-            role === "student" ? "/dashboard/my-enroll-class" :
-            "/"
-          }
+          to="/profile"
           
           className={({ isActive }) =>
             `px-4 py-2 rounded ${
               isActive
-                ? "dark:text-primary border-b-2 border-primary"
+                ? "border-b-2 border-primary"
                 : "text-light-text hover:text-primary dark:text-dark-text dark:hover:text-accent"
             }`
           }
         >
-          Dashboard
+          Profile
         </NavLink>
       </li>
     </>
@@ -113,7 +60,7 @@ const Navbar = () => {
     <nav
       className={`border-b dark:border-b-slate-500 fixed top-0 left-0 z-50 w-full transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
-      } bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text`}
+      } text-light-text dark:bg-blue-950`}
     >
       <div className="navbar container mx-auto">
         {/* Navbar Start */}
@@ -143,29 +90,19 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="hidden sm:flex items-center justify-between">
-            <img
-              src={darkLogo}
-              alt="Light Logo"
-              className="w-16 hidden dark:block"
-            />
-            <img
-              src={logo}
-              alt="Dark Logo"
-              className="w-16 block dark:hidden"
-            />
 
             <Link
-              to="/"
-              className="text-sm md:xl font-bold text-primary dark:text-accent sm:ml-4"
+              to="/home"
+              className="text-sm md:xl font-bold  dark:text-white sm:ml-4"
             >
-              EduProSphere
+              Task Management
             </Link>
           </div>
           <Link
-            to="/"
-            className="sm:hidden text-sm md:xl font-bold text-primary dark:text-accent sm:ml-4"
+            to="/home"
+            className="sm:hidden text-sm md:xl font-bold  dark:text-white sm:ml-4"
           >
-            EduProSphere
+            Task Management
           </Link>
         </div>
         {/* Navbar Center */}
@@ -229,7 +166,7 @@ const Navbar = () => {
                   <li className="mt-2">
                     <button
                       onClick={handelLogOut}
-                      className="btn-sm bg-primary text-white rounded-md transition-colors w-full"
+                      className="btn rounded-md transition-colors w-full"
                     >
                       Logout
                     </button>
@@ -238,7 +175,7 @@ const Navbar = () => {
               </div>
               <button
                 onClick={handelLogOut}
-                className="btn-sm bg-primary text-white rounded-md transition-colors"
+                className="btn rounded-md transition-colors"
               >
                 Logout
               </button>
@@ -251,7 +188,7 @@ const Navbar = () => {
                 </button>
               </Link>
               <Link to="/login">
-                <button className="btn btn-sm border border-primary dark:border-accent rounded-sm text-primary dark:text-accent">
+                <button className="btn border border-primary dark:border-accent rounded-sm text-primary dark:text-accent">
                   Login
                 </button>
               </Link>
