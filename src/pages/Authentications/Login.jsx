@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { loadCaptchaEnginge, LoadCanvasTemplate } from "react-simple-captcha";
 import { Link, useLocation, useNavigate } from "react-router";
 import ContinueGoogle from './../../components/shared/GoogleSignUp/ContinueGoogle';
+import ThemeToggle from "../../hooks/ThemeToggle/ThemeToggle";
 
 const Login = () => {
   const [err, setErr] = useState("");
@@ -61,15 +62,15 @@ const Login = () => {
       <div
         className="min-h-screen flex items-center justify-center px-4"
       >
-        <div className="bg-light-background dark:bg-dark-background shadow-lg rounded-lg p-8 max-w-4xl w-full flex flex-col md:flex-row">
+        <div className="shadow-lg rounded-lg p-8 max-w-4xl w-full flex flex-col md:flex-row">
           {/* Illustration Section */}
           <div className="w-full md:w-1/2 flex items-center justify-center mb-6 md:mb-0">
-            Login
+            Login    <ThemeToggle></ThemeToggle>
           </div>
 
           {/* Form Section */}
           <div className="w-full md:w-1/2 md:pl-8">
-            <h2 className="text-2xl font-bold mb-6 text-center md:text-left text-primary dark:text-accent">
+            <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
               Login
             </h2>
            
@@ -77,7 +78,7 @@ const Login = () => {
               {/* Email Input */}
               <div>
                 <label
-                  className="block text-sm font-medium mb-1 text-light-text dark:text-dark-text"
+                  className="block text-sm font-medium mb-1"
                   htmlFor="email"
                 >
                   Email

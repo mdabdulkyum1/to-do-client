@@ -7,6 +7,7 @@ import useAuth from "../../hooks/GetAuthInfo/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import ThemeToggle from "../../hooks/ThemeToggle/ThemeToggle";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(true);
@@ -73,7 +74,7 @@ const SignUp = () => {
           {/* Form Section */}
           <div className="w-full md:w-1/2 md:pr-8 mb-6 md:mb-0">
             <h2 className="text-2xl font-bold mb-6 text-center md:text-left text-primary dark:text-accent">
-              Sign Up
+              Sign Up    <ThemeToggle></ThemeToggle>
             </h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* Name Input */}
