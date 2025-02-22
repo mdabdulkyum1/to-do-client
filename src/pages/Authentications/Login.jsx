@@ -1,7 +1,4 @@
 import { FaFacebook, FaGithub } from "react-icons/fa";
-import { Helmet } from "react-helmet-async";
-
-
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/GetAuthInfo/useAuth";
 import { useEffect, useState } from "react";
@@ -10,6 +7,7 @@ import { loadCaptchaEnginge, LoadCanvasTemplate } from "react-simple-captcha";
 import { Link, useLocation, useNavigate } from "react-router";
 import ContinueGoogle from './../../components/shared/GoogleSignUp/ContinueGoogle';
 import ThemeToggle from "../../hooks/ThemeToggle/ThemeToggle";
+import { Title} from 'react-head';
 
 const Login = () => {
   const [err, setErr] = useState("");
@@ -56,9 +54,9 @@ const Login = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Task Management | Login</title>
-      </Helmet>
+    <Title>
+      Task Manager | Login
+    </Title>
       <div
         className="min-h-screen flex items-center justify-center px-4"
       >

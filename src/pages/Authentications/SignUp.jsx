@@ -1,5 +1,4 @@
 import { FaFacebook, FaGithub } from "react-icons/fa";
-import { Helmet } from "react-helmet-async";
 import ContinueGoogle from "../../components/shared/GoogleSignUp/ContinueGoogle";
 import { useForm } from "react-hook-form";
 import { imageUpload, saveUser } from "../../Api/utils";
@@ -8,6 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import ThemeToggle from "../../hooks/ThemeToggle/ThemeToggle";
+import { Title} from 'react-head';
 
 const SignUp = () => {
   const [loading, setLoading] = useState(true);
@@ -66,9 +66,9 @@ const SignUp = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Task Management | SignUp</title>
-      </Helmet>
+    <Title>
+      Task Manager | Sign Up
+    </Title>
       <div>
         <div className="bg-light-background dark:bg-dark-background shadow-lg rounded-lg p-8 max-w-4xl w-full flex flex-col md:flex-row">
           {/* Form Section */}

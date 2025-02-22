@@ -1,14 +1,13 @@
 import AddTask from "./AddTask/AddTask";
 import TaskBoard from "./TaskBoard/TaskBoard";
-import { Helmet } from 'react-helmet-async';
+import { Title} from 'react-head';
 
 const Home = () => {
   return (
     <>
-    <Helmet>
-        <title>Task Management | Home</title>
-    </Helmet>
-   
+    <Title>
+      Task Manager | Home
+    </Title>
     <div className="min-h-screen bg-white dark:bg-blue-950 dark:text-white mt-16 py-16">
       {/* Header Section */}
 
