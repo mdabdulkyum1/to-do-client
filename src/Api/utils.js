@@ -1,7 +1,7 @@
 import axios from "axios";
 import { io } from "socket.io-client";
 import Swal from "sweetalert2";
-const socket = io("http://localhost:5000");
+const socket = io("https://to-do-server-dun.vercel.app");
 
 
 const image_hosting_key = import.meta.env.VITE_IMGBB_API_key;
@@ -31,7 +31,7 @@ export const saveUser = async (user) => {
 
 
   export const handleUpdate = async (id) => {
-    const { data } = await axios.get(`http://localhost:5000/tasks/${id}`);
+    const { data } = await axios.get(`https://to-do-server-dun.vercel.app/tasks/${id}`);
 
     if (!data) {
       return;
@@ -136,7 +136,7 @@ export const saveUser = async (user) => {
 
     if (formValues) {
       try {
-        const { data } = await axios.patch(`http://localhost:5000/tasks/${id}`, formValues); // Using PUT to update the task
+        const { data } = await axios.patch(`https://to-do-server-dun.vercel.app/tasks/${id}`, formValues); // Using PUT to update the task
         if (data.modifiedCount > 0) {
           Swal.fire(
             "Task Updated!",
@@ -165,7 +165,7 @@ export const saveUser = async (user) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/tasks/${taskId}`);
+          await axios.delete(`https://to-do-server-dun.vercel.app/tasks/${taskId}`);
           socket.emit("taskUpdated");
           Swal.fire("Deleted!", "Your task has been deleted.", "success");
         } catch (error) {
