@@ -1,6 +1,8 @@
 import useAuth from "../../../hooks/GetAuthInfo/useAuth";
 import Swal from "sweetalert2";
 import useAxiosPublic from './../../../hooks/AxiosPublic/useAxiosPublic';
+import { io } from "socket.io-client";
+const socket = io(`${import.meta.env.VITE_server_url}`); // Update this with your backend URL
 
 const AddTask = () => {
   const { user } = useAuth();
@@ -109,6 +111,7 @@ const AddTask = () => {
     if (formValues) {
        try{
         const {data} = await axiosPublic.post("/tasks", formValues);
+        socket.emit("taskUpdated", data);
         if(data.insertedId){
           Swal.fire("Task Added!", "Task has been added successfully.", "success");
         }

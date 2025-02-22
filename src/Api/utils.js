@@ -31,7 +31,10 @@ export const saveUser = async (user) => {
 
 
   export const handleUpdate = async (id) => {
+    console.log(id);
+    console.log(import.meta.env.VITE_server_url);
     const { data } = await axios.get(`${import.meta.env.VITE_server_url}/tasks/${id}`);
+    console.log(data);
 
     if (!data) {
       return;
@@ -136,7 +139,7 @@ export const saveUser = async (user) => {
 
     if (formValues) {
       try {
-        const { data } = await axios.patch(`${import.meta.env.VITE_server_url}/${id}`, formValues); // Using PUT to update the task
+        const { data } = await axios.patch(`${import.meta.env.VITE_server_url}/tasks/${id}`, formValues); // Update task
         if (data.modifiedCount > 0) {
           Swal.fire(
             "Task Updated!",
