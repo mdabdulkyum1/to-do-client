@@ -8,12 +8,11 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import {
-  arrayMove,
-} from "@dnd-kit/sortable";
+import { arrayMove } from "@dnd-kit/sortable";
 import TaskColumn from "./TaskColumn";
+import { handelReordered } from "../../../Api/utils";
 
-const socket = io("https://to-do-server-production-220c.up.railway.app"); // Update this with your backend URL
+const socket = io(`${import.meta.env.VITE_server_url}`); // Ensure correct backend URL
 
 const TaskBoard = () => {
   const axiosPublic = useAxiosPublic();
@@ -23,7 +22,7 @@ const TaskBoard = () => {
     fetchTasks();
     socket.on("taskUpdated", fetchTasks);
     return () => socket.off("taskUpdated");
-  }, []);
+  }, []); // Only runs once on mount
 
   const fetchTasks = async () => {
     try {
@@ -35,68 +34,52 @@ const TaskBoard = () => {
   };
 
   const categories = ["To-Do", "In Progress", "Done"];
-
   const sensors = useSensors(useSensor(PointerSensor));
+
   const handleDragEnd = async (event) => {
     const { active, over } = event;
-  
     if (!over || active.id === over.id) return;
-  
+
     const oldIndex = tasks.findIndex((task) => task._id === active.id);
     if (oldIndex === -1) {
-      console.error("Error: Active task not found in the list.");
+      console.error("Error: Task not found.");
       return;
     }
-  
+
     const draggedTask = tasks[oldIndex];
-    const targetCategory = over.id; // Example: "To-Do"
-  
-    // Find first task in the target category to determine index
-    const targetTask = tasks.find((task) => task.category === targetCategory);
-    let newIndex = tasks.findIndex((task) => task._id === targetTask?._id);
-  
-    // If category is empty, place the dragged task at the end
-    if (!targetTask) {
-      newIndex = tasks.length;
-    }
-  
+    const targetCategory = over.id;
+
+    // Get target position within the same category
+    const categoryTasks = tasks.filter((task) => task.category === targetCategory);
+    const targetTask = categoryTasks.find((task) => task._id === over.id);
+
+    let newIndex = targetTask ? categoryTasks.indexOf(targetTask) : categoryTasks.length;
+
     let updatedTasks = [...tasks];
-  
+
     if (draggedTask.category !== targetCategory) {
-      // Change category and update order
       updatedTasks = tasks.map((task) =>
         task._id === active.id
           ? { ...task, category: targetCategory, order: newIndex }
           : task
       );
     } else {
-      // Reorder within the same category
       updatedTasks = arrayMove(tasks, oldIndex, newIndex);
     }
-  
+
     setTasks(updatedTasks);
-  
-    try {
-      await axiosPublic.patch(`/tasks/reorder/${active.id}`, {
-        category: targetCategory,
-        order: newIndex,
-      });
-  
-      socket.emit("taskUpdated");
-    } catch (error) {
-      console.error("Error updating task:", error);
-    }
+
+    const reorderedTasks = updatedTasks.map(({ _id, category, order }) => ({
+      _id,
+      category,
+      order,
+    }));
+
+    await handelReordered(reorderedTasks);
   };
-  
-  
-  
 
   return (
-    <DndContext
-      collisionDetection={closestCorners}
-      onDragEnd={handleDragEnd}
-      sensors={sensors}
-    >
+    <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd} sensors={sensors}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {categories.map((category) => (
           <TaskColumn

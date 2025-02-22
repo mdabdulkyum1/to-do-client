@@ -1,7 +1,7 @@
 import axios from "axios";
 import { io } from "socket.io-client";
 import Swal from "sweetalert2";
-const socket = io("https://to-do-server-production-220c.up.railway.app");
+const socket = io(`${import.meta.env.VITE_server_url}`); // Update this with your backend URL
 
 
 const image_hosting_key = import.meta.env.VITE_IMGBB_API_key;
@@ -31,7 +31,7 @@ export const saveUser = async (user) => {
 
 
   export const handleUpdate = async (id) => {
-    const { data } = await axios.get(`https://to-do-server-production-220c.up.railway.app/tasks/${id}`);
+    const { data } = await axios.get(`${import.meta.env.VITE_server_url}/tasks/${id}`);
 
     if (!data) {
       return;
@@ -136,7 +136,7 @@ export const saveUser = async (user) => {
 
     if (formValues) {
       try {
-        const { data } = await axios.patch(`https://to-do-server-production-220c.up.railway.app/tasks/${id}`, formValues); // Using PUT to update the task
+        const { data } = await axios.patch(`${import.meta.env.VITE_server_url}/${id}`, formValues); // Using PUT to update the task
         if (data.modifiedCount > 0) {
           Swal.fire(
             "Task Updated!",
@@ -165,7 +165,7 @@ export const saveUser = async (user) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`https://to-do-server-production-220c.up.railway.app/tasks/${taskId}`);
+          await axios.delete(`${import.meta.env.VITE_server_url}/tasks/${taskId}`);
           socket.emit("taskUpdated");
           Swal.fire("Deleted!", "Your task has been deleted.", "success");
         } catch (error) {
@@ -175,3 +175,23 @@ export const saveUser = async (user) => {
       }
     });
   };
+
+
+  
+export const handelReordered = async (reorderedTasks) => {
+  if (!Array.isArray(reorderedTasks) || reorderedTasks.length === 0) {
+    console.warn("No valid tasks provided for reordering.");
+    return;
+  }
+
+  try {
+    const response = await axios.patch(`${import.meta.env.VITE_server_url}/tasks/reorder`, {
+      tasks: reorderedTasks,
+    });
+
+    return response.data; // Optionally return response for further handling
+  } catch (error) {
+    console.error("Error updating task order:", error.response?.data || error.message);
+  }
+};
+

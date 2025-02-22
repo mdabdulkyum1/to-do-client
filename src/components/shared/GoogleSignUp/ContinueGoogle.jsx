@@ -24,6 +24,7 @@ const ContinueGoogle = () => {
         };
 
         if (user?.email) {
+          navigate(targetPath);
           const { data } = await axiosPublic.post(`/users`, userInfo);
           if (data.insertedId) {
             Swal.fire({
