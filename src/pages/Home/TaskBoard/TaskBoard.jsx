@@ -13,7 +13,7 @@ import {
 } from "@dnd-kit/sortable";
 import TaskColumn from "./TaskColumn";
 
-const socket = io("https://to-do-server-dun.vercel.app"); // Update this with your backend URL
+const socket = io("https://to-do-server-production-220c.up.railway.app"); // Update this with your backend URL
 
 const TaskBoard = () => {
   const axiosPublic = useAxiosPublic();
