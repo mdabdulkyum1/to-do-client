@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import Login from "./pages/Authentications/Login";
 import Home from "./pages/Home/Home";
 import SignUp from "./pages/Authentications/SignUp";
-import MainLayout from "./layout/mainLayout";
+
 import PrivateRoute from "./route/PrivateRoute";
 import ErrorPage from './pages/ErrorPage/ErrorPage';
+import MainLayout from './layout/MainLayout';
 
 
 function App() {
