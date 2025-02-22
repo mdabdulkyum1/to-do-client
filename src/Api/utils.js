@@ -31,10 +31,8 @@ export const saveUser = async (user) => {
 
 
   export const handleUpdate = async (id) => {
-    console.log(id);
-    console.log(import.meta.env.VITE_server_url);
+  
     const { data } = await axios.get(`${import.meta.env.VITE_server_url}/tasks/${id}`);
-    console.log(data);
 
     if (!data) {
       return;
